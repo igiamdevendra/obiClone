@@ -1,18 +1,18 @@
+import { PostRequest } from "../types/api";
 import { appAxios } from "./axiosConfig";
 
-export const _post = async (url: string, data: any, headers: any) => {
+export const _post: PostRequest = async (url, data, headers = null) => {
     // const endpoint = url.split('/').filter(Boolean).pop();
     let response;
     try {
         if (headers) {
-            const response = await appAxios.post(url, data, { headers });
+            response = await appAxios.post(url, data, { headers });
         }
         else {
-            const response = await appAxios.post(url, data);
+            response = await appAxios.post(url, data);
         }
         return response?.data;
     } catch (error) {
         console.log("error")
     }
-
 }
