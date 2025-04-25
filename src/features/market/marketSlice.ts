@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { MarketState } from "../../types/marketSliceTypes";
+import { RootState } from "../../app/store";
 
 const initialState: MarketState = {
-    availableMarkets: {},
+    availableMarkets: null,
     selectedMarketId: null,
     selectedMarketCurrency: null,
     selectedMarketLanguage: null,
@@ -17,9 +18,12 @@ const marketSlice = createSlice({
         marketFetchSuccess : (state, action) => {
             state.availableMarkets = action.payload;
             state.selectedMarketId = action.payload.data.defaultmarket;
+            state.selectedMarketCurrency = action.payload.data.markets.find((m:any) => m.marketid === action.payload.data.defaultmarket).currencycode ?? "USD";
+            state.selectedMarketLanguage = action.payload.data.markets.find((m:any) => m.marketid === action.payload.data.defaultmarket).language ?? "en";
         }
     }
 })
 
 export const { marketFetchSuccess } = marketSlice.actions;
+export const selectedMarket = (state : RootState) => state.market.availableMarkets?.data?.markets.find((m: any) => m.marketid === state.market.selectedMarketId) ?? null;
 export default marketSlice.reducer;

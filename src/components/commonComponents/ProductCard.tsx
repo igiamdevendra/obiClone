@@ -4,9 +4,10 @@ interface ProductCardProps {
     image: string;
     desc: string;
     title: string;
+    productid: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title, productid }) => {
     const openModal = () => {
         const modal = document.getElementById("my_modal_3") as HTMLDialogElement;
         if (modal) {
@@ -16,7 +17,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title }) => {
     return (
         <>
             <PriceModal 
-            title={title}
+            productid={productid}
             />
             <div className="card bg-white text-black w-[27rem] border border-gray-300 shadow-xl">
                 <figure>
