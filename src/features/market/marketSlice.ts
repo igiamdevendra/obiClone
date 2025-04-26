@@ -26,4 +26,5 @@ const marketSlice = createSlice({
 
 export const { marketFetchSuccess } = marketSlice.actions;
 export const selectedMarket = (state : RootState) => state.market.availableMarkets?.data?.markets.find((m: any) => m.marketid === state.market.selectedMarketId) ?? null;
+export const availableMarkets = (state: RootState) => state.market.availableMarkets;
 export default marketSlice.reducer;
