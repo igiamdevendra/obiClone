@@ -20,7 +20,11 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Enable JSON Imports */
+    "resolveJsonModule": true, // Allows importing .json files
+    "esModuleInterop": true // Ensures smooth ES and CommonJS module interop
   },
   "include": ["src"]
 }
