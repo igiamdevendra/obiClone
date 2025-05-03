@@ -1,5 +1,8 @@
 {
   "arrivalDeparture": "ARRIVAL & DEPARTURE",
+  "arrival" : "ARRIVAL",
+  "departure": "DEPARTURE",
+  "book": "Book",
   "priceModalHeading": "{{product}} PRICES"
 }
     

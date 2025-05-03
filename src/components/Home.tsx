@@ -11,6 +11,7 @@ import {
 } from "../constants/commonConstants";
 import { SyncLoader } from "react-spinners";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const selectedMarket = useSelector(currentMarket);
@@ -18,6 +19,7 @@ const Home = () => {
   const availableMarkets = useSelector(AM);
   const [loading, setLoading] = useState(false);
   const renderedProducts: string[] = [];
+  const { t } = useTranslation("home")
 
   useEffect(() => {
     setLoading(!availableMarkets)
@@ -31,8 +33,8 @@ const Home = () => {
 
   return (
     <div className="mx-auto text-center px-4 mt-8">
-      <h1 className="font-medium mb-2 underline text-2xl">LOUNGE SERVICES</h1>
-      <h3 className="text-2xl mb-6">Please select your product</h3>
+      <h1 className="font-medium mb-2 underline text-2xl">{t("loungeServices")}</h1>
+      <h3 className="text-2xl mb-6">{t("selectYourProduct")}</h3>
 
       <div className="flex justify-center gap-6 flex-wrap">
         {priceList?.map((value) => {
