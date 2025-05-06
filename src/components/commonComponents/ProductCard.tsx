@@ -4,9 +4,9 @@ import Button from "./Button";
 import { login } from "../../api/apiCalls";
 import { BASE_URL, PRODUCTID_ARRIVAL, PRODUCTID_ARRIVALBUNDLE, ROUTENAME_ARRIVAL, ROUTENAME_ARRIVALBUNDLE, ROUTENAME_DEPARTURE } from "../../constants/commonConstants";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { PuffLoader } from "react-spinners";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { isLoading as IL, startLoading, stopLoading } from "../../features/Loader/loaderSlice";
+import Loader from "./Loader";
 
 interface ProductCardProps {
     image: string;
@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title, productid
     const { t } = useTranslation("common");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [loading, setLoading] = useState(true);
+    const isLoading = useSelector(IL);
 
     const openModal = () => {
         const modal = document.getElementById(`my_modal_${productid}`) as HTMLDialogElement;
@@ -43,31 +43,22 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title, productid
     }
 
     const productClickHandler = async () => {
-        setLoading(true);
+        dispatch(startLoading());
         const response = await login(dispatch);
         if (response?.status === 0) {
             navigate(generateURLForRedirect());
         }
-        setLoading(false);
-    }
-
-    if (loading) {
-        return (<div className="flex justify-center items-center" style={{height: "calc(100vh - 4rem)"}}>
-          <PuffLoader color="#ffffff" />
-        </div>)
+        dispatch(stopLoading());
     }
 
     return (
-        <>
+        <>  
+            {isLoading && <Loader/>}
+            
             <PriceModal
                 productid={productid}
             />
             <div className="card bg-white text-black w-[24rem] border border-gray-300 shadow-xl">
-                <PuffLoader 
-                loading={loading}
-                className="flex justify-center items-center" style={{height: "calc(100vh - 4rem)"}}
-                />
-
                 <figure>
                     <img
                         src={image}
