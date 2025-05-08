@@ -1,6 +1,7 @@
 import { _post } from "."
-import { AppDispatch } from "../app/store";
+import store, { AppDispatch } from "../app/store";
 import { VIPER_CONST } from "../constants/api"
+import { startLoading, stopLoading } from "../features/Loader/loaderSlice";
 import { marketFetchSuccess } from "../features/market/marketSlice";
 import { loginInServiceSuccess } from "../features/signin/signinSlice";
 
@@ -20,7 +21,8 @@ export const getMarkets = async(dispatch : AppDispatch) => {
     }
 }
 
-export const login = async (dispatch: AppDispatch) => {
+export const login = async () => {
+    store.dispatch(startLoading());
     const body = {
         "failstatus": 0,
         "request": {
@@ -33,7 +35,8 @@ export const login = async (dispatch: AppDispatch) => {
     }
     const response = await _post(`${baseURL}login`, body);
     
-    dispatch(loginInServiceSuccess(response?.data))
+    store.dispatch(loginInServiceSuccess(response?.data));
+    store.dispatch(stopLoading());
     
     return response;
 }

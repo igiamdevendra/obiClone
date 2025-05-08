@@ -4,10 +4,6 @@ import Button from "./Button";
 import { login } from "../../api/apiCalls";
 import { BASE_URL, PRODUCTID_ARRIVAL, PRODUCTID_ARRIVALBUNDLE, ROUTENAME_ARRIVAL, ROUTENAME_ARRIVALBUNDLE, ROUTENAME_DEPARTURE } from "../../constants/commonConstants";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { isLoading as IL, startLoading, stopLoading } from "../../features/Loader/loaderSlice";
-import Loader from "./Loader";
-
 interface ProductCardProps {
     image: string;
     desc: string;
@@ -18,8 +14,6 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title, productid }) => {
     const { t } = useTranslation("common");
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const isLoading = useSelector(IL);
 
     const openModal = () => {
         const modal = document.getElementById(`my_modal_${productid}`) as HTMLDialogElement;
@@ -43,18 +37,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, desc, title, productid
     }
 
     const productClickHandler = async () => {
-        dispatch(startLoading());
-        const response = await login(dispatch);
+        const response = await login();
         if (response?.status === 0) {
             navigate(generateURLForRedirect());
         }
-        dispatch(stopLoading());
     }
 
     return (
         <>  
-            {isLoading && <Loader/>}
-            
             <PriceModal
                 productid={productid}
             />
